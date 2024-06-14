@@ -15,8 +15,13 @@ app.listen(3000, () => console.log('OnLine: http://localhost:3000'))
 
 import *as express from 'express'
 const app = express()
+import useController from './controller/useController'
+import postController from './controller/postController'
 
-app.get('/', (req, res) => {
+app.use('/use', useController)
+app.use('/post', postController)
+
+/*app.get('/', (req, res) => {
   res.send('O código após a configuração do webpack')
 })
 
@@ -31,5 +36,14 @@ app.put('/', (req, res) => {
 app.delete('/', (req, res) => {
   res.send('DELETE /')
 })
+
+app.listen(3000, () => console.log('OnLine: http://localhost:3000'))*/
+
+
+
+app.get('/post/:id?', (req, res) => {
+  res.send('GET Post')
+})
+
 
 app.listen(3000, () => console.log('OnLine: http://localhost:3000'))
