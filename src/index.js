@@ -15,10 +15,11 @@ app.listen(3000, () => console.log('OnLine: http://localhost:3000'))
 
 import *as express from 'express'
 const app = express()
-import useController from './controller/useController'
-import postController from './controller/postController'
+app.use(express.json())
+import userController from './modules/User/userController'
+import postController from './modules/Post/postController'
 
-app.use('/use', useController)
+app.use('/user', userController)
 app.use('/post', postController)
 
 /*app.get('/', (req, res) => {
