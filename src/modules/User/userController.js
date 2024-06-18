@@ -4,8 +4,13 @@ import { signup } from './useService'
 
 const router = Router()
 router.use('/signup', (req, res) => {
-    const answer = signup(req.body)
+    try {const answer = signup(req.body)
     res.send(answer)
+    } catch (error) {
+      if(error.message === "email_inexistente")
+        return res.status(400).send(error.message)
+      res.status(500).send(error.message)
+    }
   })
   
   
