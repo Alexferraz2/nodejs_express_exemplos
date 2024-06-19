@@ -1,11 +1,13 @@
 import { Router } from 'express'
 
-import { signup } from './useService'
+import { signup, login } from './useService'
 
+const AUTH_COOKIE_NAME = 'authorization'
 const router = Router()
-router.use('/signup', (req, res) => {
-    try {const answer = signup(req.body)
-    res.send(answer)
+router.post('/signup', (req, res) => {
+    try {
+      const token = signup(req.body)
+    res.cookie(AUTH_COOKIE_NAME, token).status(201).send()
     } catch (error) {
       if(error.message === "email_inexistente")
         return res.status(400).send(error.message)
@@ -14,8 +16,15 @@ router.use('/signup', (req, res) => {
   })
   
   
-  router.use('login', (req, res) => {
-    res.send('LOGUIN')
+  router.post('login', (req, res) => {
+    try {
+      const token = login(req.body)
+      res.cookie(AUTH_COOKIE_NAME, token).status(200).send()
+    } catch (error) {
+        if(error.message === 'email_nao_encontrado' || error.message === 'senha_incorreta')
+          return res.status(400).send(error.message)
+        res.status(500).send()
+    }
   })
 
 

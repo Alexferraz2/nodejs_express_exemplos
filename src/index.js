@@ -14,7 +14,10 @@ app.listen(3000, () => console.log('OnLine: http://localhost:3000'))
 //O código após a configuração do webpack
 
 import *as express from 'express'
+import * as cookieParser from 'cookie-parser'
 const app = express()
+
+app.use(cookieParser())
 app.use(express.json())
 import userController from './modules/User/userController'
 import postController from './modules/Post/postController'
